@@ -28,6 +28,8 @@
   },
   "main": "./bin/index",
   "dependencies": {
+    "async": "^1.4.2",
+    "glob": "^5.0.14"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
@@ -35,7 +37,7 @@
     "gulp-clean": "^0.3.1",
     "mocha": "^2.2.5",
     "run-sequence": "^1.1.2",
-    "should": "^7.0.1"
+    "should": "^7.0.3"
   },
   "scripts": {
     "test": "mocha"
