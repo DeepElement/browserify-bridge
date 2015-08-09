@@ -52,13 +52,15 @@ Call the module:
 
 List of absolute paths to sources files to include in the entry module.
 
-	Notice for non-node projects, the full path of the source file will be included in the entry module. It is recommended to provide a `package.json` reference in variable `package` to assure source modules are included with relative paths
+> Notice: for non-node projects, the full path of the source file will be included in the entry module. 
+> It is recommended to provide a `package.json` reference in variable `package` to assure source modules are included with relative paths
 
 ## env (optional)
 
 Key/Value set of variables to assure are available on the `window.process.env` variable at runtime.
 
-	Notice: Client frameworks should be careful is exported in code to prevent security issues. See `envWhiteList` below to refine.
+> Notice: Client frameworks should be careful is exported in code to prevent security issues. 
+> See `envWhiteList` below to refine.
 
 ## envWhiteList (optional)
 
