@@ -24,7 +24,7 @@ Why that is important (from the SDK API perspective):
 
 	`npm install browserify-bridge --save`
 
-In the module:
+Call the module:
 
 	// Given that CommonJS project is structured as follows:
 	// (root)
@@ -33,40 +33,37 @@ In the module:
 	// 		-app.js
 	// 	package.json
 
-	var MetroNode = require('metronode');
+	var BrowserifyBridge = require('browserify-bridge');
 	var path = require('path');
 
-	var instance = new MetroNode({
-		sourceRoot: path.join(__dirname, 'src'),
+	var instance = new BrowserifyBridge({
 		env: process.env,
-		packageRoot: __dirname,
-		sourceFiles: [
+		envWhiteList: ['MySpecialKeyOnly'],
+		package: path.join(__dirname, "src", "package.json"),
+		sources: [
 			path.join(__dirname, 'src', 'main.js'),
 			path.join(__dirname, 'src', 'app.js')
 		]
 	});
 
-#Warning: ENV dictionary will be exported as-is.
-This can cause security issues if you are storing secrets in `env` values.
-To avoid, use the `envWhiteList` constructor argument to limit.
+#Options
 
-	// Given that CommonJS project is structured as follows:
-	// (root)
-	// 	-src
-	// 		-main.js
-	// 		-app.js
-	// 	package.json
+## sources (required)
 
-	var MetroNode = require('metronode');
-	var path = require('path');
+List of absolute paths to sources files to include in the entry module.
 
-	var instance = new MetroNode({
-		sourceRoot: path.join(__dirname, 'src'),
-		env: process.env,
-		packageRoot: __dirname,
-		sourceFiles: [
-			path.join(__dirname, 'src', 'main.js'),
-			path.join(__dirname, 'src', 'app.js')
-		],
-		envWhiteList: ['MySpecialKeyOnly']
-	});
+	Notice for non-node projects, the full path of the source file will be included in the entry module. It is recommended to provide a `package.json` reference in variable `package` to assure source modules are included with relative paths
+
+## env (optional)
+
+Key/Value set of variables to assure are available on the `window.process.env` variable at runtime.
+
+	Notice: Client frameworks should be careful is exported in code to prevent security issues. See `envWhiteList` below to refine.
+
+## envWhiteList (optional)
+
+Key list of valid `env` keys to be applied to the `window.process.env` scope.
+
+##  package (recommended/optional)
+
+Location of project `package.json` to drive both `dependencies` exposure and relative source paths.
