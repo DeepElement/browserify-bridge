@@ -95,7 +95,7 @@ Call the module:
 
 	var instance = new BrowserifyBridge({
 		env: process.env,
-		envWhiteList: ['MySpecialKeyOnly'],
+		envWhiteList: ['NODE_ENV'],
 		package: path.join(__dirname, "src", "package.json"),
 		sources: [
 			path.join(__dirname, 'src', 'main.js'),
