@@ -59,7 +59,7 @@ a(exports,'provider.base', require('/home/toddpi314/project/src/provider/base.js
 a(exports,'provider.network', require('/home/toddpi314/project/src/provider/network.js'))
 ```
 
-Running `browserify` on the bridge entry module with a standalone namespace gives you easy access:
+Running `browserify` on the `browserify-bridge` generated entry module (with a standalone namespace) gives you easy access:
 
 ```javascript
 // Assuming "SDK" is the browserify standalone namespace
