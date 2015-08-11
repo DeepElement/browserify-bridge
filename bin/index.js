@@ -14,6 +14,7 @@ String.prototype.replaceAll = function(search, replace) {
 
 var _constructor = function(options) {
   this._sources = options.sources;
+  this._relativeApiRoot = options.relativeApiRoot;
 
   // env Support
   this._envWhiteList = options.envWhiteList || [];
@@ -49,20 +50,19 @@ _constructor.prototype.generate = function(callback) {
   if (that._sources) {
     that._sources.forEach(function(item) {
       var modulePath = item;
-      if(that._package)
-      {
-        var basePath = path.dirname(that._package);
-        modulePath = path.relative(basePath, modulePath);
-      }
+
+      if (that._relativeApiRoot)
+        modulePath = path.relative(that._relativeApiRoot, modulePath);
+
       var moduleFullName = path.basename(modulePath);
       var moduleFullNameExt = path.extname(moduleFullName);
       var moduleApiName = moduleFullName.slice(0, -moduleFullNameExt.length);
       var moduleApiKey = modulePath.slice(0, -moduleFullNameExt.length);
       moduleApiKey = moduleApiKey.replaceAll(path.sep, '.');
 
-      if(moduleApiKey.indexOf('.') == 0)
-				moduleApiKey = moduleApiKey.substr(1);
-			result += 'a(exports,\'' + moduleApiKey + '\', require(\'' + modulePath.replace(/\//g, path.sep) + '\')) \n';
+      if (moduleApiKey.indexOf('.') == 0)
+        moduleApiKey = moduleApiKey.substr(1);
+      result += 'a(exports,\'' + moduleApiKey + '\', require(\'' + item.replace(/\//g, path.sep) + '\')) \n';
     });
     result += "\n";
   }
@@ -76,8 +76,8 @@ _constructor.prototype.exportToFile = function(path, callback) {
 };
 
 _constructor.prototype.export = function(callback) {
-	var content = this.generate();
-	return callback(null, content);
+  var content = this.generate();
+  return callback(null, content);
 };
 
 // export for profit

@@ -34,7 +34,7 @@ describe('integration tests', function() {
         });
     });
 
-    it('Sources relative with Package', function(done) {
+    it('Sources relative with relativeApiRoot', function(done) {
       var simpleDir = path.join(__dirname, "harness", "simple");
       loadTestHarness(simpleDir,
         function(err, files) {
@@ -43,10 +43,12 @@ describe('integration tests', function() {
 
           var instance = new BrowserifyBridge({
             sources: files,
-            package: path.join(simpleDir, "package.json")
+            package: path.join(simpleDir, "package.json"),
+            relativeApiRoot : simpleDir
           });
 
           var resp = instance.generate();
+          console.log(resp);
 
           // TODO: do assertions
 

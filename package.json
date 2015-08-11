@@ -6,8 +6,8 @@
   },
   "name": "browserify-bridge",
   "private": false,
-  "description": "API Generator for Browserify projects",
-  "version": "0.0.1",
+  "description": "Browserify Entry Module Generator for Javascript Libraries",
+  "version": "0.0.2",
   "keywords": [
     "browersify",
     "commonjs"
