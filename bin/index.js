@@ -22,7 +22,6 @@ var _constructor = function(options) {
 _constructor.prototype.generate = function(callback) {
   var that = this;
   var result = _exportsInject + "\n\n";
-  result += _processInject + "\n\n";
 
   if (that._package) {
     var packageDef = require(that._package);
