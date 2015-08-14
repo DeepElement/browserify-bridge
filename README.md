@@ -12,14 +12,12 @@ What it does:
 - creates Browserify compatible Entry module
 - exposes all NPM dependencies on module scope
 - exposes direct apis to specific source modules
-- makes NODE_ENV args accessible on global scope (build variables)
 
 Why that is important (from the SDK API perspective):
 
 - don't have to keep track of which modules are exposed in your entry point
 - access NPM dependencies directly (Jquery, Underscore, etc)
 - access CommonJS instances directly (Subclass, Module instance interaction, etc)
-- access build variables to control runtime behavior
 
 # 2-second Example
 
@@ -42,8 +40,6 @@ The `browserify-bridge` plugin generates `browserify` entry module:
 
 ```javascript
 function a(e,t,n){var r=e,i=t.split("."),s;while(i.length>0){s=i.shift();if(!r[s]){if(i.length>0)r[s]={};else{r[s]=n}}r=r[s]}};
-
-window.process = window.process || {};window.process.env = window.process.env || {};function b(k,v) { window.process.env[k] = v;  };
 
 exports["async"]=require("async");
 exports["glob"]=require("glob");
@@ -70,9 +66,6 @@ SDK.async.each(...);
 
 // NPM injected libraries
 SDK.underscore.throttle(...);
-
-// Build variable support in the browser
-console.log(window.process.env.NODE_ENV);
 ```
 
 ok, ok, that was like 20 seconds...
@@ -94,8 +87,6 @@ Call the module:
 	var path = require('path');
 
 	var instance = new BrowserifyBridge({
-		env: process.env,
-		envWhiteList: ['NODE_ENV'],
 		package: path.join(__dirname, "src", "package.json"),
 		sources: [
 			path.join(__dirname, 'src', 'main.js'),
@@ -112,16 +103,6 @@ List of absolute paths to sources files to include in the entry module.
 
 >	Notice for non-node projects, the full path of the source file will be included in the entry module. It is recommended to use either option `opts.basedir` or `full-path` with `browserify`
 
-## env (optional)
-
-Key/Value set of variables to assure are available on the `window.process.env` variable at runtime.
-
-> Notice: Client frameworks should be careful is exported in code to prevent security issues.
-> See `envWhiteList` below to refine.
-
-## envWhiteList (optional)
-
-Key list of valid `env` keys to be applied to the `window.process.env` scope.
 
 ##  package (recommended/optional)
 
@@ -132,4 +113,3 @@ Location of project `package.json` to drive NPM `dependencies` injection.
 ## relativeApiRoot (optional)
 
 Control the folder prefix that is parsed into the public api. For instance, if sources are in a `src` directory, provide an absolute path beneath that directory to avoid apis with `SDK.src.component`
-
