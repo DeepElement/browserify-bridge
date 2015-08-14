@@ -132,3 +132,4 @@ Location of project `package.json` to drive NPM `dependencies` injection.
 ## relativeApiRoot (optional)
 
 Control the folder prefix that is parsed into the public api. For instance, if sources are in a `src` directory, provide an absolute path beneath that directory to avoid apis with `SDK.src.component`
+
