@@ -43,8 +43,6 @@ The `browserify-bridge` plugin generates `browserify` entry module:
 ```javascript
 function a(e,t,n){var r=e,i=t.split("."),s;while(i.length>0){s=i.shift();if(!r[s]){if(i.length>0)r[s]={};else{r[s]=n}}r=r[s]}};
 
-window.process = window.process || {};window.process.env = window.process.env || {};function b(k,v) { window.process.env[k] = v;  };
-
 exports["async"]=require("async");
 exports["glob"]=require("glob");
 exports["momentr"]=require("momentr");
@@ -132,4 +130,3 @@ Location of project `package.json` to drive NPM `dependencies` injection.
 ## relativeApiRoot (optional)
 
 Control the folder prefix that is parsed into the public api. For instance, if sources are in a `src` directory, provide an absolute path beneath that directory to avoid apis with `SDK.src.component`
-

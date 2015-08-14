@@ -3,7 +3,6 @@ var path = require('path'),
   fs = require('fs');
 
 var _exportsInject = 'function a(e,t,n){var r=e,i=t.split("."),s;while(i.length>0){s=i.shift();if(!r[s]){if(i.length>0)r[s]={};else{r[s]=n}}r=r[s]}};';
-var _processInject = 'window.process = window.process || {};window.process.env = window.process.env || {};function b(k,v) { window.process.env[k] = v;  };';
 
 String.prototype.replaceAll = function(search, replace) {
   if (replace === undefined) {
@@ -16,10 +15,6 @@ var _constructor = function(options) {
   this._sources = options.sources;
   this._relativeApiRoot = options.relativeApiRoot;
 
-  // env Support
-  this._envWhiteList = options.envWhiteList || [];
-  this._env = options.env;
-
   // package.json support
   this._package = options.package;
 };
@@ -28,17 +23,6 @@ _constructor.prototype.generate = function(callback) {
   var that = this;
   var result = _exportsInject + "\n\n";
   result += _processInject + "\n\n";
-
-  if (this._env) {
-    for (var envKey in that._env) {
-      var isValid = that._envWhiteList.length > 0 ? false : true;
-      if (!isValid && that._envWhiteList.indexOf(envKey) > -1)
-        isValid = true;
-      if (isValid)
-        result += 'b(\'' + envKey + '\', \'' + escape(that._env[envKey]) + '\')\n';
-    }
-    result += "\n";
-  }
 
   if (that._package) {
     var packageDef = require(that._package);
@@ -83,4 +67,4 @@ _constructor.prototype.export = function(callback) {
 // export for profit
 "object" === typeof exports ? module.exports = _constructor : "function" === typeof define && define.amd ? define(function() {
   return _constructor;
-}) : this["node-metronode"] = _constructor;
+}) : this["browserify-bridge"] = _constructor;
