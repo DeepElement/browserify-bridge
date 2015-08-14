@@ -7,7 +7,7 @@
   "name": "browserify-bridge",
   "private": false,
   "description": "Browserify Entry Module Generator for Javascript Libraries",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "keywords": [
     "browersify",
     "commonjs"
